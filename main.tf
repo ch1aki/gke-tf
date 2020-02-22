@@ -1,25 +1,61 @@
-data "google_compute_zones" "available" {}
-
 resource "google_container_cluster" "primary" {
-  name = "${var.cluster_name}"
-  zone = "${data.google_compute_zones.available.names[0]}"
-  initial_node_count = 3
+  name = var.cluster_name
+  location = var.location
 
-  additional_zones = [
-    "${data.google_compute_zones.available.names[1]}"
-  ]
+  remove_default_node_pool = true
+  initial_node_count = 1
 
   master_auth {
-    username = "${var.username}"
-    password = "${var.password}"
+    username = ""
+    password = ""
+  }
+}
+
+resource "google_container_node_pool" "primary_nodes" {
+  name       = "${var.cluster_name}-pool"
+  location   = var.location
+  cluster    = google_container_cluster.primary.name
+  node_count = 1
+
+  management {
+    auto_repair = true
   }
 
   node_config {
+    machine_type = "f1-micro"
+
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+
     oauth_scopes = [
-      "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring"
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
+}
+
+resource "google_container_node_pool" "primary_preemptible_nodes" {
+  name       = "${var.cluster_name}-preemptible-node-pool"
+  location   = var.location
+  cluster    = google_container_cluster.primary.name
+  node_count = 2
+
+  management {
+    auto_repair = true
+  }
+
+  node_config {
+    preemptible  = true
+    machine_type = "f1-micro"
+
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
     ]
   }
 }
