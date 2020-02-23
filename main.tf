@@ -1,9 +1,9 @@
 resource "google_container_cluster" "primary" {
-  name = var.cluster_name
+  name     = var.cluster_name
   location = var.location
 
   remove_default_node_pool = true
-  initial_node_count = 1
+  initial_node_count       = 1
 
   master_auth {
     username = ""
@@ -22,7 +22,7 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 
   node_config {
-    machine_type = "f1-micro"
+    machine_type = var.nodes_machine_type
 
     metadata = {
       disable-legacy-endpoints = "true"
@@ -47,7 +47,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 
   node_config {
     preemptible  = true
-    machine_type = "f1-micro"
+    machine_type = var.preemptible_nodes_machine_type
 
     metadata = {
       disable-legacy-endpoints = "true"
