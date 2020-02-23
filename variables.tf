@@ -3,6 +3,16 @@ variable "cluster_name" {
 }
 
 variable "location" {
-  type = string
+  type    = string
   default = "us-west1-a"
+}
+
+variable "nodes_machine_type" {
+  type    = string
+  default = "f1-micro"
+}
+
+variable "preemptible_nodes_machine_type" {
+  type    = string
+  default = "f1-micro"
 }
