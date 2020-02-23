@@ -14,5 +14,5 @@ variable "nodes_machine_type" {
 
 variable "preemptible_nodes_machine_type" {
   type    = string
-  default = "n1-standard-1"
+  default = "f1-micro"
 }
