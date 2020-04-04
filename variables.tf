@@ -14,7 +14,7 @@ variable "nodes_machine_type" {
 
 variable "node_count" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "preemptible_nodes_machine_type" {
@@ -24,5 +24,5 @@ variable "preemptible_nodes_machine_type" {
 
 variable "preemptible_node_count" {
   type    = number
-  default = 3
+  default = 2
 }
