@@ -18,7 +18,8 @@ resource "google_container_node_pool" "primary_nodes" {
   node_count = var.node_count
 
   management {
-    auto_repair = true
+    auto_repair  = true
+    auto_upgrade = true
   }
 
   node_config {
@@ -42,7 +43,8 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   node_count = var.preemptible_node_count
 
   management {
-    auto_repair = true
+    auto_repair  = true
+    auto_upgrade = true
   }
 
   node_config {
