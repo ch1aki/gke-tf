@@ -15,7 +15,7 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = "${var.cluster_name}-pool"
   location   = var.location
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = var.node_count
 
   management {
     auto_repair = true
@@ -39,7 +39,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "${var.cluster_name}-preemptible-node-pool"
   location   = var.location
   cluster    = google_container_cluster.primary.name
-  node_count = 2
+  node_count = var.preemptible_node_count
 
   management {
     auto_repair = true
