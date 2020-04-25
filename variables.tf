@@ -7,19 +7,9 @@ variable "location" {
   default = "us-west1-a"
 }
 
-variable "nodes_machine_type" {
-  type    = string
-  default = "f1-micro"
-}
-
-variable "node_count" {
-  type    = number
-  default = 1
-}
-
 variable "preemptible_nodes_machine_type" {
   type    = string
-  default = "f1-micro"
+  default = "e2-small"
 }
 
 variable "preemptible_node_count" {

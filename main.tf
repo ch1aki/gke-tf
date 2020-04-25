@@ -11,31 +11,6 @@ resource "google_container_cluster" "primary" {
   }
 }
 
-resource "google_container_node_pool" "primary_nodes" {
-  name       = "${var.cluster_name}-pool"
-  location   = var.location
-  cluster    = google_container_cluster.primary.name
-  node_count = var.node_count
-
-  management {
-    auto_repair  = true
-    auto_upgrade = true
-  }
-
-  node_config {
-    machine_type = var.nodes_machine_type
-
-    metadata = {
-      disable-legacy-endpoints = "true"
-    }
-
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
-    ]
-  }
-}
-
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "${var.cluster_name}-preemptible-node-pool"
   location   = var.location
